@@ -104,7 +104,7 @@ export const getLoan= async (req:Request, res:Response)=>{
     //  res.json(UMS)
 
      if(!UMS){
-         res.json('not user funde')
+         res.json('User Id Is Invalids ')
     }else{
         res.json(UMS)
      }
@@ -113,35 +113,21 @@ export const getLoan= async (req:Request, res:Response)=>{
     }
 }
 
-export const getBookLoans = async (req:Request, res:Response)=>{
-    try{
-        const bookId = req.body.bookId
 
-        const loan = await prisma.loan.findFirst({
-            
-          select:{
-            bmsId: false,
-            bookId: true
-          }  
-        })
-        res.json(loan)
-    }catch(e){
-        console.log(e)
-    }
-}
+
 
 export const getAllBUserLoanBook = async (req:Request, res:Response)=>{
     try{
-     const id = req.body.bmsId
-     const bmsId = await prisma.loan.findMany({
+     const id = req.body.bookId
+     const bookId = await prisma.loan.findMany({
         where:{
-            bmsId: id
+            bookId: id
         },
         select:{
-            bms:true,
-            book:{
+            book:true,
+            bms:{
                 select:{
-                    name: true,
+                    username: true,
                     
                 }
             }
@@ -149,13 +135,13 @@ export const getAllBUserLoanBook = async (req:Request, res:Response)=>{
      })
      
 
-     if(!bmsId){
+     if(!bookId){
       res.json({
         message: 'bmsId is invalid'
       })
     
      }else(
-         res.json(bmsId)
+         res.json(bookId)
 
      )
     }catch(e){
