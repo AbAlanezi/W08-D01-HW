@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User{
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+
+}
+
+
+model movie{
+  id String @id @default(uuid())
+  name String 
+  rating   Int
+  duration Int
+  createdat DateTime @default(now())
+  genre Genre
+}
+
+enum Genre  {
+  Action
+  Drama
+  Comedy
+
+}
+
+model UMS{
+  id String @id @default(uuid())
+  username String
+  password Int
+  email  String @unique
+  role Role
+  joiningYear String
+  age Int
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+
+model BMS{
+ id String @id @default(uuid())
+ username String 
+ password String 
+ book Loan[]
+}
+
+model Books{
+  id String @id @default(uuid())
+  name String
+  genre String
+  bms Loan[]
+} 
+
+model Loan {
+  id String @id @default(uuid())
+  bmsId String 
+  bms BMS? @relation(fields: [bmsId], references: [id])
+  bookId String 
+  book Books? @relation(fields: [bookId], references: [id])
+}
