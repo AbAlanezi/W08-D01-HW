@@ -78,7 +78,7 @@ export const getLoans = async (req:Request, res:Response)=>{
 export const createLoan = async (req:Request, res:Response)=>{
     try{
         const loan = req.body
-        await prisma.loan.create({
+   const q = await prisma.loan.create({
             data:loan
         })
         res.json({
@@ -135,7 +135,7 @@ export const getAllBUserLoanBook = async (req:Request, res:Response)=>{
      })
      
 
-     if(!bookId){
+     if(bookId.length == 0){
       res.json({
         message: 'bmsId is invalid'
       })

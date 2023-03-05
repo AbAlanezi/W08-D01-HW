@@ -12,7 +12,7 @@ router.get('/book', getBooks)
 router.get('/loans', getLoans)
 router.post('/loan', createLoan)
 router.get('/loan',validate(BMStyeps), getLoan)
-router.post('/loan2', getAllBUserLoanBook)
+router.get('/loan2', getAllBUserLoanBook)
 
 
 export default router
